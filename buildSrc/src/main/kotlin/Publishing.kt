@@ -9,12 +9,6 @@ import java.nio.file.Paths
 import java.util.Properties
 
 object Publishing {
-    const val versionName = "3.0.5"
-
-    const val url = "https://github.com/appmotion-gmbh/MvvmBase"
-    const val gitUrl = "https://github.com/appmotion-gmbh/MvvmBase.git"
-    const val licenseUrl = "https://github.com/appmotion-gmbh/MvvmBase/blob/master/LICENSE"
-    const val groupId = "io.github.appmotion-gmbh"
     private val properties = Properties()
 
     fun getOssrhUsername() = properties["private_ossrh_user"]?.toString()
@@ -29,20 +23,22 @@ object Publishing {
 }
 
 fun PublicationContainer.create(publication: Publication, project: Project) = create<MavenPublication>("release") {
+    val properties = Properties()
+    properties.load(FileInputStream(project.rootProject.file("gradle.properties")))
     from(project.components["release"])
 
     project.getTasksByName("sourcesJar", false).forEach { artifact(it) }
 
-    groupId = Publishing.groupId
+    groupId = properties["groupId"]?.toString()
     artifactId = publication.artifactId
-    version = Publishing.versionName
+    version = properties["versionName"]?.toString()
 
     pom {
         packaging = "aar"
 
         name.set(publication.artifactId)
         description.set(publication.description)
-        url.set(Publishing.url)
+        url.set(properties["url"]?.toString())
 
         developers {
             developer {
@@ -55,14 +51,14 @@ fun PublicationContainer.create(publication: Publication, project: Project) = cr
         licenses {
             license {
                 name.set("The Apache Software License, Version 2.0")
-                url.set(Publishing.licenseUrl)
+                url.set(properties["licenseUrl"]?.toString())
             }
         }
 
         scm {
-            connection.set(Publishing.gitUrl)
-            developerConnection.set(Publishing.gitUrl)
-            url.set(Publishing.url)
+            connection.set(properties["gitUrl"]?.toString())
+            developerConnection.set(properties["gitUrl"]?.toString())
+            url.set(properties["url"]?.toString())
         }
     }
 }
