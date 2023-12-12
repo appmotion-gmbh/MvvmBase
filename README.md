@@ -7,25 +7,25 @@ MvvmBase is available via Maven Central. To use it put this in your `build.gradl
 
 ```gradle
 dependencies {
-    def mvvmbaseVersion = "3.0.4"
+    def mvvmbaseVersion = "3.0.5"
 
     [...]
-    implementation de.trbnb:mvvmbase-core:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-core:$mvvmbaseVersion"
 
     // Data Binding compatibility extensions
-    implementation de.trbnb:mvvmbase-databinding:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-databinding:$mvvmbaseVersion"
 
     // RxJava 2 extensions for Data Binding
-    implementation de.trbnb:mvvmbase-rxjava2:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-rxjava2:$mvvmbaseVersion"
     
     // RxJava 3 extensions for Data Binding
-    implementation "de.trbnb:mvvmbase-rxjava3:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-rxjava3:$mvvmbaseVersion"
 
     // Coroutines extensions for Data Binding
-    implementation "de.trbnb:mvvmbase-coroutines:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-coroutines:$mvvmbaseVersion"
 
     // Conductor support for Data Binding
-    implementation "de.trbnb:mvvmbase-conductor:$mvvmbaseVersion"
+    implementation "io.github.appmotion-gmbh:mvvmbase-conductor:$mvvmbaseVersion"
 }
 ```
 
