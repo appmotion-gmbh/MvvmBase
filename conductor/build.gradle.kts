@@ -40,6 +40,11 @@ android {
     kotlinOptions {
         jvmTarget = Versions.java.toString()
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -58,11 +63,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.espresso}")
 }
 
-val sourcesJar = task<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(android.sourceSets["main"].java.srcDirs)
-}
-
 signing {
     sign(publishing.publications)
 }
@@ -70,7 +70,7 @@ signing {
 afterEvaluate {
     publishing {
         repositories {
-            mavenCentralUpload(project)
+            mavenCentralUpload()
         }
         publications {
             create(Publication.CONDUCTOR, this@afterEvaluate)
