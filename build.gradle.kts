@@ -18,6 +18,7 @@ plugins {
     kotlin("jvm") version Versions.kotlin
     id("io.gitlab.arturbosch.detekt") version "1.17.1"
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 subprojects {

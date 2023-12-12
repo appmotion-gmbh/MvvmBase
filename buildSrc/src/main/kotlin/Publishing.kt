@@ -4,22 +4,26 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.get
+import java.io.FileInputStream
 import java.nio.file.Paths
+import java.util.Properties
 
 object Publishing {
-    const val versionName = "3.0.4"
+    const val versionName = "3.0.5"
 
-    const val url = "https://github.com/trbnb/MvvmBase"
-    const val gitUrl = "https://github.com/trbnb/MvvmBase.git"
-    const val licenseUrl = "https://github.com/trbnb/MvvmBase/blob/master/LICENSE"
-    const val groupId = "de.trbnb"
+    const val url = "https://github.com/appmotion-gmbh/MvvmBase"
+    const val gitUrl = "https://github.com/appmotion-gmbh/MvvmBase.git"
+    const val licenseUrl = "https://github.com/appmotion-gmbh/MvvmBase/blob/master/LICENSE"
+    const val groupId = "io.github.appmotion-gmbh"
+    private val properties = Properties()
 
-    fun getOssrhUsername(project: Project) = project.rootProject.extra["private_ossrh_user"].toString()
-    fun getOssrhPassword(project: Project) = project.rootProject.extra["private_ossrh_password"].toString()
+    fun getOssrhUsername() = properties["private_ossrh_user"]?.toString()
+    fun getOssrhPassword() = properties["private_ossrh_password"]?.toString()
 
     fun setupSigning(project: Project) {
-        project.rootProject.extra["signing.keyId"] = project.rootProject.extra["private_ossrh_signing_keyid"].toString()
-        project.rootProject.extra["signing.password"] = project.rootProject.extra["private_ossrh_signing_passphrase"].toString()
+        properties.load(FileInputStream(project.rootProject.file("local.properties")))
+        project.rootProject.extra["signing.keyId"] = properties["private_ossrh_signing_keyid"]?.toString()
+        project.rootProject.extra["signing.password"] = properties["private_ossrh_signing_passphrase"]?.toString()
         project.rootProject.extra["signing.secretKeyRingFile"] = Paths.get(project.rootDir.canonicalPath, "signing.gpg")
     }
 }
@@ -42,10 +46,9 @@ fun PublicationContainer.create(publication: Publication, project: Project) = cr
 
         developers {
             developer {
-                id.set("trbnb")
-                name.set("Thorben Buchta")
-                email.set("thorbenbuchta@gmail.com")
-                url.set("https://www.trbnb.de")
+                id.set("Appmotion")
+                name.set("Lucas Krug")
+                email.set("entwicklung@appmotion.de")
             }
         }
 

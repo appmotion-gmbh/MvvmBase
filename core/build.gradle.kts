@@ -45,6 +45,11 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.composeCompiler
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -82,11 +87,6 @@ repositories {
     google()
 }
 
-val sourcesJar = task<Jar>("sourcesJar") {
-    archiveClassifier.set("sources")
-    from(android.sourceSets["main"].java.srcDirs)
-}
-
 signing {
     sign(publishing.publications)
 }
@@ -94,7 +94,7 @@ signing {
 afterEvaluate {
     publishing {
         repositories {
-            mavenCentralUpload(project)
+            mavenCentralUpload()
         }
         publications {
             create(Publication.CORE, this@afterEvaluate)
